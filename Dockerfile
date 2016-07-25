@@ -1,0 +1,22 @@
+FROM node:4.4.7
+MAINTAINER Vicente Pons <simpons@gmail.com>
+
+ENV EMBERCLI_VERSION 2.6.3
+ENV BOWER_VERSION 1.7.9
+ENV PHANTOMJS_VERSION 2.1.1
+
+RUN \
+	npm install -g ember-cli@"$EMBERCLI_VERSION" &&\
+	npm install -g bower@"$BOWER_VERSION" &&\
+	npm install -g phantomjs@"$PHANTOMJS_VERSION"
+
+# Install watchman
+RUN \
+	apt-get update && \
+	apt-get install -y autoconf automake build-essential python-dev &&\
+	git clone https://github.com/facebook/watchman.git &&\
+	cd watchman &&\
+	./autogen.sh &&\
+	./configure &&\
+	make &&\
+	make install
